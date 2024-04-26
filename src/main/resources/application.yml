@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /estudismo/v1
+
+spring:
+  application:
+    name: verificacao-intermediaria-balanca-api
+  jpa:
+    show_sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
