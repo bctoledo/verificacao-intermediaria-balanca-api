@@ -3,7 +3,7 @@ package br.gov.ms.aem.verificacaointermediariabalancaapi.domains.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import br.gov.ms.aem.verificacaointermediariabalancaapi.enums.Portaria;
+import br.gov.ms.aem.verificacaointermediariabalancaapi.domains.enums.Portaria;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
