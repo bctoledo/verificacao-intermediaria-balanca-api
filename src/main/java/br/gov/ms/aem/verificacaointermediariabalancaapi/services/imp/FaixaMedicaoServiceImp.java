@@ -21,9 +21,9 @@ public class FaixaMedicaoServiceImp implements FaixaMedicaoService {
 
     @Override
     public FaixaMedicaoDTO save(FaixaMedicaoDTO FaixaMedicaoDTO) {
-        FaixaMedicao faixaMedicao = buildEntity(FaixaMedicaoDTO);
+        FaixaMedicao faixaMedicao = FaixaMedicao.buildEntity(FaixaMedicaoDTO);
         repository.save(faixaMedicao);
-        return buildDTO(faixaMedicao);
+        return FaixaMedicaoDTO.buildDTO(faixaMedicao);
     }
 
     @Override
@@ -44,42 +44,21 @@ public class FaixaMedicaoServiceImp implements FaixaMedicaoService {
     public FaixaMedicaoDTO update(Integer id, FaixaMedicaoDTO FaixaMedicaoDTO) {
         Optional<FaixaMedicao> faixaMedicoesOptional = repository.findById(id);
         FaixaMedicao faixaMedicoesBD = faixaMedicoesOptional.get();
-        FaixaMedicao faixaMedicoesRequest = buildEntity(FaixaMedicaoDTO);
+        FaixaMedicao faixaMedicoesRequest = FaixaMedicao.buildEntity(FaixaMedicaoDTO);
         merge(faixaMedicoesBD, faixaMedicoesRequest);
         repository.save(faixaMedicoesRequest);
-        return buildDTO(faixaMedicoesRequest);
+        return FaixaMedicaoDTO.buildDTO(faixaMedicoesRequest);
     }
 
     @Override
     public FaixaMedicaoDTO findById(Integer id) {
         Optional<FaixaMedicao> faixaMedicoesOptional = repository.findById(id);
-        return buildDTO(faixaMedicoesOptional.get());
+        return FaixaMedicaoDTO.buildDTO(faixaMedicoesOptional.get());
     }
 
-    private FaixaMedicao buildEntity(FaixaMedicaoDTO faixaMedicaoDTO) {
-        if (faixaMedicaoDTO == null)
-            throw new RuntimeException("Erro ao buildar Balança Modelo!");
-        return FaixaMedicao.builder()
-                .id(faixaMedicaoDTO.getId())
-                .dtCriacao(faixaMedicaoDTO.getDtCriacao())
-                .faixaMedicao(faixaMedicaoDTO.getFaixaMedicao())
-                .portaria(faixaMedicaoDTO.getPortaria())
-                .build();
-    }
-
-    private FaixaMedicaoDTO buildDTO(FaixaMedicao faixaMedicao) {
-        if (faixaMedicao == null)
-            throw new RuntimeException("Erro ao buildar Faixa de Medição!");
-        return FaixaMedicaoDTO.builder()
-                .id(faixaMedicao.getId())
-                .dtCriacao(faixaMedicao.getDtCriacao())
-                .faixaMedicao(faixaMedicao.getFaixaMedicao())
-                .portaria(faixaMedicao.getPortaria())
-                .build();
-    }
 
     private List<FaixaMedicaoDTO> buildDTOList(List<FaixaMedicao> faixaMedicoes) {
-        return faixaMedicoes.stream().map(this::buildDTO)
+        return faixaMedicoes.stream().map(FaixaMedicaoDTO::buildDTO)
                 .collect(Collectors.toList());
     }
 

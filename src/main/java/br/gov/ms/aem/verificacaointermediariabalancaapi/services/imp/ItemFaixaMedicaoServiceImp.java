@@ -8,9 +8,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.gov.ms.aem.verificacaointermediariabalancaapi.domains.dtos.FaixaMedicaoDTO;
 import br.gov.ms.aem.verificacaointermediariabalancaapi.domains.dtos.ItemFaixaMedicaoDTO;
+import br.gov.ms.aem.verificacaointermediariabalancaapi.domains.entities.FaixaMedicao;
 import br.gov.ms.aem.verificacaointermediariabalancaapi.domains.entities.ItemFaixaMedicao;
 import br.gov.ms.aem.verificacaointermediariabalancaapi.repositories.ItemFaixaMedicaoRepository;
+import br.gov.ms.aem.verificacaointermediariabalancaapi.services.FaixaMedicaoService;
 import br.gov.ms.aem.verificacaointermediariabalancaapi.services.ItemFaixaMedicaoService;
 
 @Service
@@ -18,6 +21,9 @@ public class ItemFaixaMedicaoServiceImp implements ItemFaixaMedicaoService {
 
     @Autowired
     ItemFaixaMedicaoRepository repository;
+
+    @Autowired
+    FaixaMedicaoService faixaMedicaoService;
 
     @Override
     public ItemFaixaMedicaoDTO save(ItemFaixaMedicaoDTO ItemFaixaMedicaoDTO) {
@@ -61,7 +67,7 @@ public class ItemFaixaMedicaoServiceImp implements ItemFaixaMedicaoService {
             throw new RuntimeException("Erro ao buildar Balança Modelo!");
         return ItemFaixaMedicao.builder()
                 .id(itemFaixaMedicaoDTO.getId())
-                // .faixaMedicao(itemFaixaMedicaoDTO.getFaixaMedicao())
+                .faixaMedicao(FaixaMedicao.buildEntity(itemFaixaMedicaoDTO.getFaixaMedicao()))
                 .valorPadrao(itemFaixaMedicaoDTO.getValorPadrao())
                 .valorTolerancia(itemFaixaMedicaoDTO.getValorTolerancia())
                 .build();
@@ -72,7 +78,7 @@ public class ItemFaixaMedicaoServiceImp implements ItemFaixaMedicaoService {
             throw new RuntimeException("Erro ao buildar Item Faixa de Medição!");
         return ItemFaixaMedicaoDTO.builder()
                 .id(itemFaixaMedicao.getId())
-                // .faixaMedicao(itemFaixaMedicao.getFaixaMedicao())
+                .faixaMedicao(FaixaMedicaoDTO.buildDTO(itemFaixaMedicao.getFaixaMedicao()))
                 .valorPadrao(itemFaixaMedicao.getValorPadrao())
                 .valorTolerancia(itemFaixaMedicao.getValorTolerancia())
                 .build();
